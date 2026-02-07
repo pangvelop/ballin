@@ -47,7 +47,8 @@ export default function RuleCompare({ fiba, nba }: RuleCompareProps) {
   const pathname = usePathname()
   const [isCompareMode, setIsCompareMode] = useState(false)
 
-  const activeLeague = (searchParams.get('league') as League) || 'fiba'
+  const leagueParam = searchParams.get('league')
+  const activeLeague: League = leagueParam === 'nba' ? 'nba' : 'fiba'
 
   const setLeague = (league: League) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -65,8 +66,9 @@ export default function RuleCompare({ fiba, nba }: RuleCompareProps) {
         <button
           type="button"
           onClick={() => setIsCompareMode(!isCompareMode)}
-          className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
-          style={{ backgroundColor: isCompareMode ? '#f97316' : '#d1d5db' }}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+            isCompareMode ? 'bg-brand-500' : 'bg-gray-300 dark:bg-gray-600'
+          }`}
           role="switch"
           aria-checked={isCompareMode}
           aria-label="비교 모드 전환"

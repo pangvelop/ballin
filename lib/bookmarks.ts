@@ -6,12 +6,28 @@ export interface Bookmark {
   type: 'rule' | 'training' | 'routine'
 }
 
+const VALID_TYPES = new Set<string>(['rule', 'training', 'routine'])
+
+function isValidBookmark(item: unknown): item is Bookmark {
+  if (typeof item !== 'object' || item === null) return false
+  const obj = item as Record<string, unknown>
+  return (
+    typeof obj.href === 'string' &&
+    obj.href.startsWith('/') &&
+    typeof obj.title === 'string' &&
+    typeof obj.type === 'string' &&
+    VALID_TYPES.has(obj.type)
+  )
+}
+
 export function getBookmarks(): Bookmark[] {
   if (typeof window === 'undefined') return []
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return []
-    return JSON.parse(raw) as Bookmark[]
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return []
+    return parsed.filter(isValidBookmark)
   } catch {
     return []
   }

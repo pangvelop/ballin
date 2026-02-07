@@ -7,6 +7,7 @@ import DifficultyBadge from '@/components/common/DifficultyBadge'
 import InfoBox from '@/components/common/InfoBox'
 import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
+import RelatedContent from '@/components/common/RelatedContent'
 import { TRAINING_CATEGORIES } from '@/lib/categories'
 import { getAllTraining, getTrainingBySlug } from '@/lib/content'
 import type { TrainingCategory } from '@/lib/types'
@@ -31,6 +32,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: training.title,
     description: training.summary,
+    openGraph: {
+      title: training.title,
+      description: training.summary,
+    },
   }
 }
 
@@ -40,6 +45,11 @@ export default async function TrainingDetailPage({ params }: Props) {
   if (!training) notFound()
 
   const categoryMeta = TRAINING_CATEGORIES[category as TrainingCategory]
+  const allTraining = getAllTraining()
+  const relatedDrills = (training.relatedDrills ?? [])
+    .map((ds) => allTraining.find((t) => t.slug === ds))
+    .filter((t) => t !== undefined)
+    .map((t) => ({ slug: t.slug, title: t.title, href: `/training/${t.category}/${t.slug}` }))
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -93,7 +103,11 @@ export default async function TrainingDetailPage({ params }: Props) {
 
       {/* MDX 본문 */}
       <article className="prose prose-gray max-w-none dark:prose-invert prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 dark:prose-headings:text-gray-100 dark:prose-p:text-gray-300 dark:prose-li:text-gray-300">
-        <MDXRemote source={training.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+        <MDXRemote
+          source={training.content}
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          components={{ script: () => null, iframe: () => null }}
+        />
       </article>
 
       {/* 흔한 실수 */}
@@ -135,6 +149,9 @@ export default async function TrainingDetailPage({ params }: Props) {
           ))}
         </div>
       )}
+
+      {/* 관련 연습법 */}
+      <RelatedContent items={relatedDrills} label="관련 연습법" />
     </div>
   )
 }

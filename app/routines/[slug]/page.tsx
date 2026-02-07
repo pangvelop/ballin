@@ -25,6 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: routine.title,
     description: routine.summary,
+    openGraph: {
+      title: routine.title,
+      description: routine.summary,
+    },
   }
 }
 
@@ -68,8 +72,12 @@ export default async function RoutineDetailPage({ params }: Props) {
       )}
 
       {/* MDX 본문 */}
-      <article className="prose prose-gray max-w-none dark:prose-invert">
-        <MDXRemote source={routine.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+      <article className="prose prose-gray max-w-none dark:prose-invert prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 dark:prose-headings:text-gray-100 dark:prose-p:text-gray-300 dark:prose-li:text-gray-300">
+        <MDXRemote
+          source={routine.content}
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          components={{ script: () => null, iframe: () => null }}
+        />
       </article>
 
       {/* 태그 */}

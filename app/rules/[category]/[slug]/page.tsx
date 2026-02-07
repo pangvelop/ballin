@@ -8,6 +8,7 @@ import DifficultyBadge from '@/components/common/DifficultyBadge'
 import RuleCompare from '@/components/rules/RuleCompare'
 import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
+import RelatedContent from '@/components/common/RelatedContent'
 import { RULE_CATEGORIES } from '@/lib/categories'
 import { getAllRules, getRuleBySlug } from '@/lib/content'
 import type { RuleCategory } from '@/lib/types'
@@ -32,6 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: rule.title,
     description: rule.summary,
+    openGraph: {
+      title: rule.title,
+      description: rule.summary,
+    },
   }
 }
 
@@ -41,6 +46,11 @@ export default async function RuleDetailPage({ params }: Props) {
   if (!rule) notFound()
 
   const categoryMeta = RULE_CATEGORIES[category as RuleCategory]
+  const allRules = getAllRules()
+  const relatedRules = (rule.relatedRules ?? [])
+    .map((rs) => allRules.find((r) => r.slug === rs))
+    .filter((r) => r !== undefined)
+    .map((r) => ({ slug: r.slug, title: r.title, href: `/rules/${r.category}/${r.slug}` }))
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -77,7 +87,11 @@ export default async function RuleDetailPage({ params }: Props) {
 
       {/* MDX 본문 */}
       <article className="prose prose-gray max-w-none dark:prose-invert prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 dark:prose-headings:text-gray-100 dark:prose-p:text-gray-300 dark:prose-li:text-gray-300">
-        <MDXRemote source={rule.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+        <MDXRemote
+          source={rule.content}
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          components={{ script: () => null, iframe: () => null }}
+        />
       </article>
 
       {/* 영상 */}
@@ -105,6 +119,9 @@ export default async function RuleDetailPage({ params }: Props) {
           ))}
         </div>
       )}
+
+      {/* 관련 룰 */}
+      <RelatedContent items={relatedRules} label="관련 룰" />
     </div>
   )
 }
