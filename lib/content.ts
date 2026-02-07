@@ -157,12 +157,9 @@ export function getRoutineBySlug(slug: string): RoutineData | null {
 // ── 용어사전 ──────────────────────────────────────────
 
 export function getAllGlossaryTerms(): GlossaryTerm[] {
-  const glossaryDir = path.join(CONTENT_DIR, 'glossary')
-  const files = getMdxFiles(glossaryDir)
+  const termsPath = path.join(CONTENT_DIR, 'glossary', 'terms.json')
+  if (!fs.existsSync(termsPath)) return []
 
-  return files.map((file) => {
-    const filePath = path.join(glossaryDir, file)
-    const { data } = parseMdxFile<GlossaryTerm>(filePath)
-    return data
-  })
+  const raw = fs.readFileSync(termsPath, 'utf-8')
+  return JSON.parse(raw) as GlossaryTerm[]
 }
