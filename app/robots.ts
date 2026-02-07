@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://ballin.kr/sitemap.xml',
+    sitemap: 'https://ballin-three.vercel.app/sitemap.xml',
   }
 }
