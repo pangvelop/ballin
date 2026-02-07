@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import SearchBar from '@/components/common/SearchBar'
+import type { SearchResult } from '@/lib/search'
 
 const NAV_ITEMS = [
   { href: '/rules', label: '룰북' },
@@ -10,7 +12,11 @@ const NAV_ITEMS = [
   { href: '/glossary', label: '용어사전' },
 ] as const
 
-export default function Header() {
+interface HeaderProps {
+  searchIndex: SearchResult[]
+}
+
+export default function Header({ searchIndex }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -37,29 +43,9 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* 검색바 자리 (추후 구현) + 햄버거 버튼 */}
+        {/* 검색 + 햄버거 버튼 */}
         <div className="flex items-center gap-2">
-          {/* 검색 아이콘 (placeholder) */}
-          <button
-            type="button"
-            className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-            aria-label="검색"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-          </button>
+          <SearchBar searchIndex={searchIndex} />
 
           {/* 모바일 햄버거 버튼 */}
           <button

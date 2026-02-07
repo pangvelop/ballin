@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/layout/Breadcrumb'
-import RuleCard from '@/components/rules/RuleCard'
+import RuleListWithFilter from '@/components/rules/RuleListWithFilter'
 import { RULE_CATEGORIES } from '@/lib/categories'
 import { getRulesByCategory } from '@/lib/content'
 import type { RuleCategory } from '@/lib/types'
@@ -47,11 +47,7 @@ export default async function RuleCategoryPage({ params }: Props) {
       <p className="mb-8 text-gray-600 dark:text-gray-400">{meta.description}</p>
 
       {rules.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {rules.map((rule) => (
-            <RuleCard key={rule.slug} rule={rule} />
-          ))}
-        </div>
+        <RuleListWithFilter rules={rules} />
       ) : (
         <p className="text-gray-500 dark:text-gray-500">
           아직 등록된 콘텐츠가 없습니다. 곧 추가됩니다.
