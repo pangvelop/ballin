@@ -23,7 +23,7 @@ export default function Home() {
         <p className="mb-2 text-xl text-gray-700 dark:text-gray-300">
           농구 룰 &amp; 연습법 가이드
         </p>
-        <p className="text-gray-500 dark:text-gray-500">
+        <p className="text-gray-500 dark:text-gray-400">
           FIBA/NBA 룰과 연습법을 체계적으로 정리한 모바일 퍼스트 웹앱
         </p>
       </section>

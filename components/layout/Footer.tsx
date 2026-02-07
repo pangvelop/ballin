@@ -56,9 +56,17 @@ export default function Footer() {
 
         {/* 하단 */}
         <div className="mt-10 border-t border-gray-200 pt-6 dark:border-gray-800">
-          <p className="text-center text-xs text-gray-500 dark:text-gray-500">
-            Ballin — 농구 룰 &amp; 연습법 가이드
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              &copy; 2026 Ballin — 농구 룰 &amp; 연습법 가이드
+            </p>
+            <a
+              href="#"
+              className="text-xs text-gray-500 transition-colors hover:text-brand-500 dark:text-gray-400 dark:hover:text-brand-400"
+            >
+              맨 위로 &uarr;
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -32,6 +32,7 @@ export default function VideoEmbed({ url, title }: VideoEmbedProps) {
           title={title}
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          sandbox="allow-scripts allow-same-origin allow-presentation"
           allowFullScreen
         />
       </div>
