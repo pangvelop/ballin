@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import SearchBar from '@/components/common/SearchBar'
+import ThemeToggle from '@/components/common/ThemeToggle'
 import type { SearchResult } from '@/lib/search'
 
 const NAV_ITEMS = [
@@ -43,9 +44,10 @@ export default function Header({ searchIndex }: HeaderProps) {
           ))}
         </nav>
 
-        {/* 검색 + 햄버거 버튼 */}
-        <div className="flex items-center gap-2">
+        {/* 검색 + 테마 + 햄버거 버튼 */}
+        <div className="flex items-center gap-1">
           <SearchBar searchIndex={searchIndex} />
+          <ThemeToggle />
 
           {/* 모바일 햄버거 버튼 */}
           <button

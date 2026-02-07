@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllRules } from '@/lib/content'
 import DifficultyBadge from '@/components/common/DifficultyBadge'
+import BookmarkSection from '@/components/common/BookmarkSection'
 
 const QUICK_LINKS = [
   { href: '/rules', label: '룰북', description: '9개 카테고리별 농구 규칙' },
@@ -46,6 +47,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* 북마크 바로가기 */}
+      <BookmarkSection />
 
       {/* 추천 콘텐츠 */}
       {featuredRules.length > 0 && (

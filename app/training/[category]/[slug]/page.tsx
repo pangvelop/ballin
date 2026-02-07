@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb'
 import DifficultyBadge from '@/components/common/DifficultyBadge'
 import InfoBox from '@/components/common/InfoBox'
 import VideoEmbed from '@/components/common/VideoEmbed'
+import BookmarkButton from '@/components/common/BookmarkButton'
 import { TRAINING_CATEGORIES } from '@/lib/categories'
 import { getAllTraining, getTrainingBySlug } from '@/lib/content'
 import type { TrainingCategory } from '@/lib/types'
@@ -57,6 +58,13 @@ export default async function TrainingDetailPage({ params }: Props) {
           <span className="text-sm text-gray-500 dark:text-gray-500">
             {training.duration}
           </span>
+          <BookmarkButton
+            bookmark={{
+              href: `/training/${category}/${slug}`,
+              title: training.title,
+              type: 'training',
+            }}
+          />
         </div>
         <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
           {training.title}
