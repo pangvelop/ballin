@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
 
 const config: Config = {
   content: [
@@ -10,12 +11,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // 농구 테마 컬러 팔레트
         court: {
-          orange: '#F97316', // 농구공 오렌지
-          wood: '#D4A574', // 코트 나무색
-          'wood-dark': '#A0784C', // 코트 나무색 (진한)
-          line: '#FFFFFF', // 코트 라인
+          orange: '#F97316',
+          wood: '#D4A574',
+          'wood-dark': '#A0784C',
+          line: '#FFFFFF',
         },
         brand: {
           50: '#FFF7ED',
@@ -23,7 +23,7 @@ const config: Config = {
           200: '#FED7AA',
           300: '#FDBA74',
           400: '#FB923C',
-          500: '#F97316', // primary
+          500: '#F97316',
           600: '#EA580C',
           700: '#C2410C',
           800: '#9A3412',
@@ -31,9 +31,9 @@ const config: Config = {
           950: '#431407',
         },
         difficulty: {
-          beginner: '#22C55E', // 초급 (녹색)
-          intermediate: '#EAB308', // 중급 (노란색)
-          advanced: '#EF4444', // 고급 (빨간색)
+          beginner: '#22C55E',
+          intermediate: '#EAB308',
+          advanced: '#EF4444',
         },
       },
       fontFamily: {
@@ -49,7 +49,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 }
 
 export default config
