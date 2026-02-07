@@ -1,8 +1,8 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6">
+    <div className="flex flex-1 flex-col items-center justify-center p-6">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-brand-500 mb-4">Ballin</h1>
+        <h1 className="mb-4 text-4xl font-bold text-brand-500">Ballin</h1>
         <p className="text-lg text-gray-600 dark:text-gray-400">
           농구 룰 &amp; 연습법 가이드
         </p>
@@ -10,6 +10,6 @@ export default function Home() {
           FIBA/NBA 룰과 연습법을 체계적으로 정리한 모바일 퍼스트 웹앱
         </p>
       </div>
-    </main>
+    </div>
   )
 }
