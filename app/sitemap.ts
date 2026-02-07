@@ -3,7 +3,7 @@ import { getAllRules, getAllTraining, getAllRoutines } from '@/lib/content'
 
 export const dynamic = 'force-static'
 
-const BASE_URL = 'https://ballin.kr'
+const BASE_URL = 'https://ballin-three.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const rules = getAllRules()
