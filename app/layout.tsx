@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { getAllRules, getAllTraining, getAllGlossaryTerms } from '@/lib/content'
+import { buildSearchIndex } from '@/lib/search'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -17,10 +19,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const rules = getAllRules()
+  const trainings = getAllTraining()
+  const glossaryTerms = getAllGlossaryTerms()
+  const searchIndex = buildSearchIndex(rules, trainings, glossaryTerms)
+
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
-        <Header />
+        <Header searchIndex={searchIndex} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
