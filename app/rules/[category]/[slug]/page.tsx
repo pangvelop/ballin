@@ -7,6 +7,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb'
 import DifficultyBadge from '@/components/common/DifficultyBadge'
 import RuleCompare from '@/components/rules/RuleCompare'
 import VideoEmbed from '@/components/common/VideoEmbed'
+import BookmarkButton from '@/components/common/BookmarkButton'
 import { RULE_CATEGORIES } from '@/lib/categories'
 import { getAllRules, getRuleBySlug } from '@/lib/content'
 import type { RuleCategory } from '@/lib/types'
@@ -55,6 +56,13 @@ export default async function RuleDetailPage({ params }: Props) {
       <div className="mb-6">
         <div className="mb-3 flex items-center gap-2">
           <DifficultyBadge difficulty={rule.difficulty} />
+          <BookmarkButton
+            bookmark={{
+              href: `/rules/${category}/${slug}`,
+              title: rule.title,
+              type: 'rule',
+            }}
+          />
         </div>
         <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
           {rule.title}

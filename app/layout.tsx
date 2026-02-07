@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ThemeProvider from '@/components/common/ThemeProvider'
 import { getAllRules, getAllTraining, getAllGlossaryTerms } from '@/lib/content'
 import { buildSearchIndex } from '@/lib/search'
 import './globals.css'
@@ -27,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
-        <Header searchIndex={searchIndex} />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ThemeProvider>
+          <Header searchIndex={searchIndex} />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
