@@ -77,6 +77,7 @@ export interface RoutineFrontmatter {
   summary: string
   tags: string[]
   drills: string[]
+  videos?: Video[]
 }
 
 // 루틴 데이터 (프론트매터 + 메타)

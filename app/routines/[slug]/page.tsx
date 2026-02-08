@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm'
 import Breadcrumb from '@/components/layout/Breadcrumb'
 import DifficultyBadge from '@/components/common/DifficultyBadge'
 import RoutineView from '@/components/training/RoutineView'
+import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
 import { getAllRoutines, getRoutineBySlug, getAllTraining } from '@/lib/content'
 
@@ -79,6 +80,18 @@ export default async function RoutineDetailPage({ params }: Props) {
           components={{ script: () => null, iframe: () => null }}
         />
       </article>
+
+      {/* 영상 */}
+      {routine.videos && routine.videos.length > 0 && (
+        <section className="mt-8">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">
+            관련 영상
+          </h2>
+          {routine.videos.map((video) => (
+            <VideoEmbed key={video.url} url={video.url} title={video.title} />
+          ))}
+        </section>
+      )}
 
       {/* 태그 */}
       {routine.tags.length > 0 && (
