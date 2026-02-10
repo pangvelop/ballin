@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | **Language** | TypeScript (strict mode) |
 | **Styling** | Tailwind CSS |
 | **Content** | MDX (마크다운 + JSX) |
+| **Testing** | Vitest + React Testing Library (단위/컴포넌트), Playwright (E2E) |
 | **Deploy** | Vercel |
 
 ## 핵심 명령어
@@ -29,8 +30,13 @@ npm run lint             # ESLint 실행
 npm run typecheck        # TypeScript 타입 체크
 
 # 테스트
-npm test                 # Vitest 단위 테스트
-npm run test:e2e         # Playwright E2E 테스트 (주요 페이지 렌더링 확인)
+npm test                 # Vitest 단위 + 컴포넌트 테스트 (1회 실행)
+npm run test:watch       # Vitest watch 모드 (TDD 개발 시 사용)
+npm run test:coverage    # 커버리지 포함 테스트 (80% 임계값)
+npm run test:e2e         # 빌드 후 Playwright E2E 테스트
+
+# 전체 검증
+npm run validate         # lint + typecheck + test + build (PR 전 필수)
 ```
 
 ---
@@ -89,10 +95,16 @@ ballin/
 │   ├── content.ts              # MDX 파싱 유틸리티 (getAllRules, getRuleBySlug 등)
 │   ├── search.ts               # 클라이언트 사이드 검색 인덱스
 │   └── bookmarks.ts            # localStorage 북마크 관리
+├── __tests__/
+│   └── fixtures/               # 테스트 픽스처 (모킹 데이터, MDX 샘플)
+├── e2e/                        # Playwright E2E 테스트 (*.spec.ts)
 ├── styles/
 │   └── globals.css
 ├── public/
 │   └── images/                 # 코트 다이어그램, 아이콘
+├── vitest.config.ts            # Vitest 설정
+├── vitest.setup.ts             # 테스트 글로벌 설정 (RTL, 모킹)
+├── playwright.config.ts        # Playwright E2E 설정
 ├── tailwind.config.ts
 ├── next.config.ts
 ├── tsconfig.json
@@ -137,7 +149,7 @@ ballin/
 - **언어**: 주석/커밋/문서 한국어, 코드/변수명 영어
 - **커밋**: Conventional Commits (`feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `chore:`)
 - **브랜치**: main 직접 push 금지. `feature/기능명`, `fix/버그명` 브랜치 → PR → merge
-- **검증**: PR 전 반드시 `npm run lint && npm run typecheck && npm run build` 통과
+- **검증**: PR 전 반드시 `npm run validate` 통과 (lint + typecheck + test + build)
 
 ### 코드 스타일
 
@@ -306,6 +318,51 @@ relatedDrills: ["behind-the-back"]
 
 ---
 
+## TDD 가이드라인
+
+### 원칙
+
+- **Red-Green-Refactor**: 실패하는 테스트 먼저 작성 → 최소 코드로 통과 → 리팩토링
+- 모든 새 코드(기능, 버그 수정)에 테스트 필수
+- 커버리지 목표: **80% 이상** (statements, branches, functions, lines)
+
+### 테스트 레이어
+
+| 레이어 | 도구 | 파일 위치 | 네이밍 |
+|--------|------|-----------|--------|
+| 단위 테스트 | Vitest | `lib/*.test.ts` (코로케이트) | `*.test.ts` |
+| 컴포넌트 테스트 | Vitest + RTL | `components/**/*.test.tsx` (코로케이트) | `*.test.tsx` |
+| E2E 테스트 | Playwright | `e2e/*.spec.ts` | `*.spec.ts` |
+
+### 모킹 전략
+
+| 대상 | 방법 |
+|------|------|
+| `fs` 모듈 (content.ts) | `vi.mock('fs')` + 팩토리 함수로 existsSync/readdirSync/readFileSync 모킹 |
+| `localStorage` | happy-dom 내장 (beforeEach에서 `localStorage.clear()`) |
+| `next/link` | 전역 모킹 (vitest.setup.ts) → `<a>` 태그로 대체 |
+| `next/navigation` | 전역 모킹 (vitest.setup.ts) → useRouter, useSearchParams, usePathname |
+| `next-themes` | 전역 모킹 (vitest.setup.ts) → useTheme, 개별 테스트에서 override 가능 |
+
+### 테스트 작성 규칙
+
+- 테스트 설명은 한국어, `~한다` 체 사용 (예: `'북마크를 추가한다'`)
+- `userEvent` 우선 사용 (`fireEvent` 대신)
+- 역할(role)/텍스트(text) 기반 쿼리 우선 (테스트 ID 지양)
+- 중복 텍스트 발생 시 `getByRole('button', { name: '...' })` 사용
+
+### TDD 워크플로우
+
+```bash
+npm run test:watch       # 1. watch 모드 시작
+# 2. 실패하는 테스트 작성 (Red)
+# 3. 최소 코드로 통과 (Green)
+# 4. 리팩토링 (Refactor)
+npm run validate         # 5. PR 전 전체 검증
+```
+
+---
+
 ## 금지 사항
 
 - `any` 타입 사용
@@ -373,4 +430,4 @@ feature/xxx, fix/xxx
 
 - 브랜치 명명: `feature/기능명`, `fix/버그명`, `docs/문서명`, `chore/작업명`
 - main 직접 push 금지
-- PR 전 `npm run lint && npm run typecheck && npm run build` 통과 필수
+- PR 전 `npm run validate` 통과 필수 (lint + typecheck + test + build)
