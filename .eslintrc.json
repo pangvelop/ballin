@@ -8,5 +8,13 @@
     ],
     "no-console": "warn",
     "prefer-const": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.{ts,tsx}", "e2e/**/*.spec.ts", "vitest.setup.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }
