@@ -7,6 +7,7 @@ import { buildSearchIndex } from '@/lib/search'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ballin-three.vercel.app'),
   title: {
     default: 'Ballin — 농구 룰 & 연습법 가이드',
     template: '%s | Ballin',
