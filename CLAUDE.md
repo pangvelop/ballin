@@ -286,7 +286,9 @@ relatedDrills: ["behind-the-back"]
 - 모든 페이지에 적절한 `<title>`과 `<meta description>` 필수
 - Next.js `metadata` export 또는 `generateMetadata` 사용
 - MDX 프론트매터의 `title`과 `summary`를 메타데이터에 활용
-- Open Graph 이미지는 추후 추가 (MVP에서는 생략 가능)
+- Open Graph 이미지: `app/opengraph-image.tsx`에서 `ImageResponse`로 빌드 타임 생성
+- Apple 터치 아이콘: `app/apple-icon.tsx`에서 동일 방식
+- `metadataBase: new URL('https://ballin-three.vercel.app')` — OG 이미지 절대 URL용
 
 ---
 
@@ -403,6 +405,14 @@ export async function generateStaticParams() {
   }))
 }
 ```
+
+### ImageResponse에서 runtime = 'edge' 사용 불가
+
+**증상**: `app/opengraph-image.tsx` 또는 `app/apple-icon.tsx`에서 `export const runtime = 'edge'` 사용 시 빌드 에러
+
+**원인**: `output: 'export'` (정적 사이트) 모드에서 `runtime = 'edge'`와 `force-static`이 충돌
+
+**해결**: `runtime = 'edge'` 제거하고 `export const dynamic = 'force-static'`만 사용. 두 파일 모두 빌드 타임에 정적(○) 생성됨.
 
 ### Tailwind 다크모드 미적용
 

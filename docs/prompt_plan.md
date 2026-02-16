@@ -2,7 +2,7 @@
 
 > **작성일:** 2026-02-07
 > **마지막 동기화:** 2026-02-16
-> **진행률:** 65/68 완료 (95.6%)
+> **진행률:** 66/68 완료 (97.1%)
 
 ---
 
@@ -194,7 +194,7 @@
   - title, description, openGraph
 - [x] **Task 5.2** — `sitemap.xml` 자동 생성 (`app/sitemap.ts`)
 - [x] **Task 5.3** — `robots.txt` 설정 (`app/robots.ts`)
-- [ ] **Task 5.4** — 이미지 최적화 (next/image, WebP)
+- [x] **Task 5.4** — 이미지 최적화 — SVG 파비콘, OG 이미지, Apple 터치 아이콘 (ImageResponse + force-static)
 - [ ] **Task 5.5** — Lighthouse 성능 점수 90+ 확인
 
 ### Milestone 5.2: CI/CD
@@ -240,14 +240,13 @@
 | Phase 2 | 18 | 18 ✅ | 룰북 페이지 + 콘텐츠, 홈페이지 (= MVP) |
 | Phase 3 | 14 | 14 ✅ | 연습법, 용어사전, 검색, 필터 |
 | Phase 4 | 9 | 9 ✅ | 비교 모드, 루틴, 북마크, 다크모드 |
-| Phase 5 | 12 | 9 | SEO, CI/CD, 콘텐츠 완성 |
-| **합계** | **68** | **65** | **95.6% 완료** |
+| Phase 5 | 12 | 10 | SEO, CI/CD, 콘텐츠 완성 |
+| **합계** | **68** | **66** | **97.1% 완료** |
 
-### 남은 Task (3개)
+### 남은 Task (2개)
 
 | Task | 설명 | 비고 |
 |------|------|------|
-| 5.4 | 이미지 최적화 (next/image, WebP) | 미확인 |
 | 5.5 | Lighthouse 성능 점수 90+ 확인 | 미확인 |
 | 5.7 | Vercel 배포 설정 | 추후 설정 예정 |
 
