@@ -414,6 +414,22 @@ export async function generateStaticParams() {
 
 **해결**: `runtime = 'edge'` 제거하고 `export const dynamic = 'force-static'`만 사용. 두 파일 모두 빌드 타임에 정적(○) 생성됨.
 
+### Suspense fallback={null}로 인한 CLS
+
+**증상**: Lighthouse CLS(Cumulative Layout Shift) 점수 저하 (0.325)
+
+**원인**: `useSearchParams()` 등을 사용하는 클라이언트 컴포넌트를 `<Suspense fallback={null}>`로 감싸면, hydration 시 컴포넌트가 나타나면서 아래 콘텐츠가 밀림
+
+**해결**: `fallback`에 실제 컴포넌트와 유사한 높이의 스켈레톤 UI 제공. 탭/버튼 형태를 정적으로 렌더링하여 레이아웃 예약.
+
+### 색상 대비 부족 (접근성)
+
+**증상**: Lighthouse Accessibility 점수 저하, `text-gray-500` 대비 부족 경고
+
+**원인**: `text-gray-500`(#6B7280)이 `bg-gray-100`(#F3F4F6) 위에서 WCAG AA 기준 미달. `text-xs` 등 작은 텍스트에서 특히 문제.
+
+**해결**: `text-gray-600 dark:text-gray-400` 사용. 보조 텍스트에도 충분한 대비 확보.
+
 ### Tailwind 다크모드 미적용
 
 **증상**: `dark:` 클래스가 동작하지 않음
