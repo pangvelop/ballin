@@ -81,7 +81,27 @@ export default async function RuleDetailPage({ params }: Props) {
       </div>
 
       {/* FIBA/NBA 비교 탭 */}
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="my-6">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">탭 모드</span>
+            </div>
+            <div className="flex rounded-lg border border-gray-200 p-1 dark:border-gray-700">
+              <div className="flex-1 rounded-md bg-brand-500 px-4 py-2 text-center text-sm font-medium text-white">
+                FIBA
+              </div>
+              <div className="flex-1 rounded-md px-4 py-2 text-center text-sm font-medium text-gray-600 dark:text-gray-400">
+                NBA
+              </div>
+            </div>
+            <div className="mt-4 rounded-lg border border-gray-200 p-4 dark:border-gray-800">
+              <div className="h-4 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+              <div className="mt-3 h-20 animate-pulse rounded bg-gray-100 dark:bg-gray-800" />
+            </div>
+          </div>
+        }
+      >
         <RuleCompare fiba={rule.fiba} nba={rule.nba} />
       </Suspense>
 

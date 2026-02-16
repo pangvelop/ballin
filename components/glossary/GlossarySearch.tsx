@@ -47,6 +47,7 @@ export default function GlossarySearch({ terms }: GlossarySearchProps) {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
+          aria-label="카테고리 필터"
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
         >
           <option value="">전체 카테고리</option>
@@ -59,11 +60,12 @@ export default function GlossarySearch({ terms }: GlossarySearchProps) {
       </div>
 
       {/* 결과 수 */}
-      <p className="mb-4 text-sm text-gray-500 dark:text-gray-500">
+      <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {filtered.length}개 용어
       </p>
 
       {/* 용어 목록 */}
+      <h2 className="sr-only">용어 목록</h2>
       <div className="space-y-3">
         {filtered.map((t) => (
           <div
@@ -75,21 +77,21 @@ export default function GlossarySearch({ terms }: GlossarySearchProps) {
                 {t.term}
               </h3>
               {t.english && (
-                <span className="text-sm text-gray-500 dark:text-gray-500">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
                   {t.english}
                 </span>
               )}
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">{t.definition}</p>
             {t.category && (
-              <span className="mt-2 inline-block rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-800 dark:text-gray-500">
+              <span className="mt-2 inline-block rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400">
                 {t.category}
               </span>
             )}
           </div>
         ))}
         {filtered.length === 0 && (
-          <p className="py-8 text-center text-gray-500 dark:text-gray-500">
+          <p className="py-8 text-center text-gray-600 dark:text-gray-400">
             검색 결과가 없습니다.
           </p>
         )}
