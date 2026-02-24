@@ -2,7 +2,7 @@
 
 > **작성일:** 2026-02-07
 > **마지막 동기화:** 2026-02-24
-> **진행률:** 75/78 완료 (96%) — Phase 0~5 완료, Phase 6 Sprint 1~3 완료
+> **진행률:** 76/78 완료 (97%) — Phase 0~5 완료, Phase 6 Sprint 1~4 완료
 
 ---
 
@@ -241,12 +241,11 @@
 | Phase 3 | 14 | 14 ✅ | 연습법, 용어사전, 검색, 필터 |
 | Phase 4 | 9 | 9 ✅ | 비교 모드, 루틴, 북마크, 다크모드 |
 | Phase 5 | 12 | 12 ✅ | SEO, CI/CD, 콘텐츠 완성 |
-| Phase 6 | 10 | 7 | 고도화 (설계 갭 해소 + F043 + F040) |
-| **합계** | **78** | **75** | **96% 완료** |
+| Phase 6 | 10 | 8 | 고도화 (설계 갭 해소 + F043 + F040 + F041) |
+| **합계** | **78** | **76** | **97% 완료** |
 
 ### 남은 Task
 
-- F041: 커뮤니티 Giscus 댓글 (Task 6.9)
 - F042: PWA 오프라인 지원 (Task 6.10)
 
 ### 콘텐츠 현황
@@ -263,9 +262,9 @@
 
 | 테스트 타입 | 개수 |
 |------------|------|
-| 단위/컴포넌트 (Vitest) | 152개 |
+| 단위/컴포넌트 (Vitest) | 156개 |
 | E2E (Playwright) | 28개 |
-| **합계** | **180개** |
+| **합계** | **184개** |
 
 ---
 
@@ -310,11 +309,15 @@
   - 룰/연습법 상세 페이지 하단에 QuizSection 배치
   - `traveling.mdx`에 샘플 퀴즈 데이터 (MC 2개 + T/F 2개)
 
-### Milestone 6.4: F041 커뮤니티 (Sprint 4)
+### Milestone 6.4: F041 커뮤니티 (Sprint 4) ✅
 
-- [ ] **Task 6.9 (F041)** — Giscus 댓글 컴포넌트
-  - `@giscus/react` 설치, 다크모드 연동
+- [x] **Task 6.9 (F041)** — Giscus 댓글 컴포넌트
+  - `@giscus/react` 설치, 다크모드 연동 (`resolvedTheme`)
   - 룰/연습법/루틴 상세 페이지 하단 배치
+  - `GiscusComments.tsx` 신규 컴포넌트 (hydration-safe mounted 가드)
+  - `vercel.json` CSP `frame-src`에 `https://giscus.app` 추가
+  - GitHub Discussions 활성화 + General 카테고리 매핑
+  - 테스트 3개 추가
 
 ### Milestone 6.5: F042 PWA (Sprint 5)
 

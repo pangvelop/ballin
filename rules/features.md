@@ -145,6 +145,18 @@ interface BookmarkItem {
 - MDX 프론트매터에 quiz.questions[] 배열로 정의
 ```
 
+## 커뮤니티 댓글 상세 (F041)
+
+```
+- Giscus (GitHub Discussions 기반) 댓글 위젯
+- 매핑: pathname (URL 경로별 자동 Discussion 생성)
+- 다크모드: resolvedTheme 기반 자동 연동
+- 배치: 룰/연습법/루틴 상세 페이지 최하단
+- CSP: vercel.json frame-src에 https://giscus.app 필수
+- Hydration: mounted 가드로 SSR 시 skeleton → 클라이언트 mount 후 Giscus 렌더링
+- 카테고리: General (GitHub Discussions 기본 제공)
+```
+
 ## 용어사전 초성 추출 (F023)
 
 ```

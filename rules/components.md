@@ -45,6 +45,15 @@
 - **QuizResult**: 결과 표시 + 다시 풀기 버튼
   - 점수/총점, 퍼센트, 재시도 콜백
 
+## GiscusComments
+
+- Giscus(GitHub Discussions 기반) 댓글 위젯 (`'use client'`)
+- `@giscus/react` 라이브러리 사용, `mapping="pathname"` (URL 경로별 자동 Discussion 생성)
+- 다크모드 자동 연동 (`resolvedTheme` 사용, `theme` 아님)
+- Hydration safety: `mounted` 상태 체크 후 렌더링 (SSR 시 skeleton placeholder)
+- 배치 위치: 룰/연습법/루틴 상세 페이지 최하단 (관련 콘텐츠 아래)
+- CSP: `vercel.json`의 `frame-src`에 `https://giscus.app` 필수
+
 ## Breadcrumb
 
 - 모든 하위 페이지에 표시
