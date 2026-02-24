@@ -241,12 +241,11 @@
 | Phase 3 | 14 | 14 ✅ | 연습법, 용어사전, 검색, 필터 |
 | Phase 4 | 9 | 9 ✅ | 비교 모드, 루틴, 북마크, 다크모드 |
 | Phase 5 | 12 | 12 ✅ | SEO, CI/CD, 콘텐츠 완성 |
-| Phase 6 | 7 | 4 | 고도화 (설계 갭 해소 + F043) |
-| **합계** | **75** | **72** | **96% 완료** |
+| Phase 6 | 10 | 7 | 고도화 (설계 갭 해소 + F043 + F040) |
+| **합계** | **78** | **75** | **96% 완료** |
 
 ### 남은 Task
 
-- F040: 퀴즈 / 셀프 테스트 (Task 6.6~6.8)
 - F041: 커뮤니티 Giscus 댓글 (Task 6.9)
 - F042: PWA 오프라인 지원 (Task 6.10)
 
@@ -264,9 +263,9 @@
 
 | 테스트 타입 | 개수 |
 |------------|------|
-| 단위/컴포넌트 (Vitest) | 133개 |
+| 단위/컴포넌트 (Vitest) | 152개 |
 | E2E (Playwright) | 28개 |
-| **합계** | **161개** |
+| **합계** | **180개** |
 
 ---
 
@@ -298,16 +297,18 @@
   - 상위 페이지 3개에서 `poster` prop 전달 연동
   - 테스트 4개 추가
 
-### Milestone 6.3: F040 퀴즈 / 셀프 테스트 (Sprint 3)
+### Milestone 6.3: F040 퀴즈 / 셀프 테스트 (Sprint 3) ✅
 
-- [ ] **Task 6.6 (F040)** — 퀴즈 타입 + 진행률 유틸
+- [x] **Task 6.6 (F040)** — 퀴즈 타입 + 진행률 유틸
   - `QuizQuestion` discriminated union, `Quiz`, `QuizProgress` 타입
   - `lib/quiz-progress.ts` localStorage CRUD
-- [ ] **Task 6.7 (F040)** — 퀴즈 컴포넌트 3개
+  - 테스트 4개 추가
+- [x] **Task 6.7 (F040)** — 퀴즈 컴포넌트 3개
   - `QuizSection`, `QuizQuestion`, `QuizResult`
-- [ ] **Task 6.8 (F040)** — 페이지 연동 + 샘플 콘텐츠
+  - 테스트 11개 추가
+- [x] **Task 6.8 (F040)** — 페이지 연동 + 샘플 콘텐츠
   - 룰/연습법 상세 페이지 하단에 QuizSection 배치
-  - `traveling.mdx`에 샘플 퀴즈 데이터
+  - `traveling.mdx`에 샘플 퀴즈 데이터 (MC 2개 + T/F 2개)
 
 ### Milestone 6.4: F041 커뮤니티 (Sprint 4)
 

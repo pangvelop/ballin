@@ -34,7 +34,7 @@
 | F034 | 다크모드 | P2 | ✅ |
 | F035 | 목차 자동 생성 | P2 | ✅ |
 | F036 | 스크롤 진행 표시기 | P2 | ✅ |
-| F040 | 퀴즈 / 셀프 테스트 | P3 | 미구현 |
+| F040 | 퀴즈 / 셀프 테스트 | P3 | ✅ |
 | F041 | 커뮤니티 (댓글/피드백) | P3 | 미구현 |
 | F042 | PWA 지원 (오프라인 열람) | P3 | 미구현 |
 | F043 | 자체 영상 연동 (MP4/WebM) | P3 | ✅ |
@@ -128,6 +128,18 @@ interface BookmarkItem {
   --bg-primary:   light=#FFFFFF,  dark=#1A1A2E
   --text-primary: light=#1A1A2E,  dark=#EAEAEA
   --accent:       light=#F97316,  dark=#FB923C
+```
+
+## 퀴즈 / 셀프 테스트 상세 (F040)
+
+```
+- 질문 타입: multiple-choice (4지선다) | true-false (O/X)
+- 타입 안전: QuizQuestion discriminated union (type 필드 기반)
+- 로컬스토리지 key: "ballin-quiz-{slug}"
+- 저장 데이터: { slug, score, total, completedAt (ISO 8601), answers[] }
+- 이전 진행률 자동 로드 (useEffect on mount)
+- 배치 위치: 룰/연습법 상세 페이지 하단 (quiz frontmatter 있을 때만 렌더링)
+- MDX 프론트매터에 quiz.questions[] 배열로 정의
 ```
 
 ## 용어사전 초성 추출 (F023)

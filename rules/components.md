@@ -31,6 +31,20 @@
 - 검색 입력 필드처럼 보이지만 실제로는 버튼 (read-only)
 - 클릭 시 `Cmd+K` KeyboardEvent 디스패치 → 기존 SearchBar 모달 오픈
 
+## 퀴즈 시스템 (Quiz)
+
+- **QuizSection**: 퀴즈 전체 오케스트레이터 (`'use client'`)
+  - `quiz: Quiz`, `slug: string` props
+  - 순차 질문 표시 → 답변 추적 → 완료 시 점수 표시
+  - `localStorage` 진행률 저장 (`ballin-quiz-{slug}`)
+  - 이전 진행률 있으면 자동 로드
+- **QuizQuestion**: 개별 문제 렌더링
+  - `multiple-choice`: 4지선다 (A/B/C/D)
+  - `true-false`: O/X 버튼
+  - 정답 초록색 하이라이트, 오답 빨간색 + 해설 표시
+- **QuizResult**: 결과 표시 + 다시 풀기 버튼
+  - 점수/총점, 퍼센트, 재시도 콜백
+
 ## Breadcrumb
 
 - 모든 하위 페이지에 표시
