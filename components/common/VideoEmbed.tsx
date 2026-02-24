@@ -1,6 +1,7 @@
 interface VideoEmbedProps {
   url: string
   title: string
+  poster?: string
 }
 
 function extractYouTubeId(url: string): string | null {
@@ -18,7 +19,32 @@ function extractYouTubeId(url: string): string | null {
   return null
 }
 
-export default function VideoEmbed({ url, title }: VideoEmbedProps) {
+function isNativeVideoUrl(url: string): boolean {
+  return url.endsWith('.mp4') || url.endsWith('.webm')
+}
+
+function getVideoMimeType(url: string): string {
+  if (url.endsWith('.webm')) return 'video/webm'
+  return 'video/mp4'
+}
+
+export default function VideoEmbed({ url, title, poster }: VideoEmbedProps) {
+  if (isNativeVideoUrl(url)) {
+    return (
+      <div className="my-4 overflow-hidden rounded-lg">
+        <video
+          className="w-full"
+          controls
+          preload="none"
+          poster={poster}
+          title={title}
+        >
+          <source src={url} type={getVideoMimeType(url)} />
+        </video>
+      </div>
+    )
+  }
+
   const videoId = extractYouTubeId(url)
 
   if (!videoId) return null

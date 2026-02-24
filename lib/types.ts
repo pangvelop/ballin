@@ -6,6 +6,8 @@ export interface Video {
   url: string
   title: string
   source?: string
+  type?: 'youtube' | 'mp4' | 'webm'
+  poster?: string
 }
 
 // 룰 카테고리 slug
