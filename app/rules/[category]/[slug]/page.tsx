@@ -121,7 +121,7 @@ export default async function RuleDetailPage({ params }: Props) {
             관련 영상
           </h2>
           {rule.videos.map((video) => (
-            <VideoEmbed key={video.url} url={video.url} title={video.title} />
+            <VideoEmbed key={video.url} url={video.url} title={video.title} poster={video.poster} />
           ))}
         </section>
       )}
