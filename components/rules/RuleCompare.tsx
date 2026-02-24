@@ -38,8 +38,8 @@ function compareKeyPoints(
 
 const HIGHLIGHT_STYLES: Record<ComparedKeyPoint['status'], string> = {
   common: '',
-  'fiba-only': 'bg-blue-50 dark:bg-blue-950 border-l-2 border-blue-400',
-  'nba-only': 'bg-red-50 dark:bg-red-950 border-l-2 border-red-400',
+  'fiba-only': 'bg-blue-50 dark:bg-blue-950 border-l-2 border-blue-400 pl-2',
+  'nba-only': 'bg-red-50 dark:bg-red-950 border-l-2 border-red-400 pl-2',
 }
 
 function LeagueContent({

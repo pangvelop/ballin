@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import type { Quiz } from '@/lib/types'
 import { getQuizProgress, saveQuizProgress } from '@/lib/quiz-progress'
+import type { QuizQuestion as QuizQuestionType } from '@/lib/types'
 import QuizQuestion from './QuizQuestion'
 import QuizResult from './QuizResult'
 
@@ -11,12 +12,30 @@ interface QuizSectionProps {
   slug: string
 }
 
+// 점수 계산 공유 함수
+function calculateScore(
+  answers: readonly number[],
+  questions: readonly QuizQuestionType[]
+): number {
+  return answers.reduce((acc, ans, idx) => {
+    const q = questions[idx]
+    if (!q) return acc
+    if (q.type === 'multiple-choice') {
+      return acc + (ans === q.answer ? 1 : 0)
+    }
+    // true-false: 0 = O(true), 1 = X(false)
+    const isCorrect = q.answer ? ans === 0 : ans === 1
+    return acc + (isCorrect ? 1 : 0)
+  }, 0)
+}
+
 export default function QuizSection({ quiz, slug }: QuizSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [answered, setAnswered] = useState(false)
   const [showResult, setShowResult] = useState(false)
 
+  // 이전 진행률 확인
   useEffect(() => {
     const prev = getQuizProgress(slug)
     if (prev) {
@@ -35,22 +54,14 @@ export default function QuizSection({ quiz, slug }: QuizSectionProps) {
 
   const handleNext = () => {
     if (isLast) {
-      const finalAnswers = answers
-      const score = finalAnswers.reduce((acc, ans, idx) => {
-        const q = quiz.questions[idx]!
-        if (q.type === 'multiple-choice') {
-          return acc + (ans === q.answer ? 1 : 0)
-        }
-        const isCorrect = q.answer ? ans === 0 : ans === 1
-        return acc + (isCorrect ? 1 : 0)
-      }, 0)
+      const score = calculateScore(answers, quiz.questions)
 
       saveQuizProgress({
         slug,
         score,
         total: quiz.questions.length,
         completedAt: new Date().toISOString(),
-        answers: finalAnswers,
+        answers,
       })
 
       setShowResult(true)
@@ -67,15 +78,7 @@ export default function QuizSection({ quiz, slug }: QuizSectionProps) {
     setShowResult(false)
   }
 
-  const score = answers.reduce((acc, ans, idx) => {
-    const q = quiz.questions[idx]
-    if (!q) return acc
-    if (q.type === 'multiple-choice') {
-      return acc + (ans === q.answer ? 1 : 0)
-    }
-    const isCorrect = q.answer ? ans === 0 : ans === 1
-    return acc + (isCorrect ? 1 : 0)
-  }, 0)
+  const score = calculateScore(answers, quiz.questions)
 
   return (
     <section className="mt-8 rounded-xl border border-gray-200 p-6 dark:border-gray-800">

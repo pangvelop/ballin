@@ -92,7 +92,7 @@ function compareKeyPoints(
 // 추천 드릴 슬러그 하드코딩 (파일 순서 의존 방지)
 const recommendedDrillSlugs = [
   'crossover-dribble',
-  'layup-drill',
+  'layup-finish',
   'free-throw-routine',
   'defensive-slide',
 ]

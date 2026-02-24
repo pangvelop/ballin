@@ -48,9 +48,12 @@ describe('QuizSection', () => {
     const user = userEvent.setup()
     render(<QuizSection quiz={quiz} slug="traveling" />)
 
+    // 첫 번째 문제 답변
     await user.click(screen.getByRole('button', { name: 'A' }))
+    // 다음 버튼 클릭
     await user.click(screen.getByRole('button', { name: '다음' }))
 
+    // 두 번째 문제 표시
     expect(screen.getByText('두 번째 문제')).toBeInTheDocument()
   })
 
@@ -58,12 +61,15 @@ describe('QuizSection', () => {
     const user = userEvent.setup()
     render(<QuizSection quiz={quiz} slug="traveling" />)
 
+    // 첫 번째 문제
     await user.click(screen.getByRole('button', { name: 'A' }))
     await user.click(screen.getByRole('button', { name: '다음' }))
 
+    // 두 번째 문제
     await user.click(screen.getByRole('button', { name: 'O' }))
     await user.click(screen.getByRole('button', { name: '결과 보기' }))
 
+    // 결과 표시
     expect(screen.getByText('2 / 2')).toBeInTheDocument()
     expect(screen.getByText('100%')).toBeInTheDocument()
   })

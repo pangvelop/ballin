@@ -19,7 +19,7 @@ describe('QuizResult', () => {
     expect(onRetry).toHaveBeenCalled()
   })
 
-  it('만점이면 100%를 표시한다', () => {
+  it('만점이면 축하 메시지를 표시한다', () => {
     render(<QuizResult score={4} total={4} onRetry={vi.fn()} />)
     expect(screen.getByText('100%')).toBeInTheDocument()
   })
