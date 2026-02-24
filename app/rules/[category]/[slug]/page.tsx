@@ -10,6 +10,7 @@ import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
 import RelatedContent from '@/components/common/RelatedContent'
 import QuizSection from '@/components/quiz/QuizSection'
+import GiscusComments from '@/components/common/GiscusComments'
 import { RULE_CATEGORIES } from '@/lib/categories'
 import { getAllRules, getRuleBySlug } from '@/lib/content'
 import type { RuleCategory } from '@/lib/types'
@@ -148,6 +149,14 @@ export default async function RuleDetailPage({ params }: Props) {
 
       {/* 관련 룰 */}
       <RelatedContent items={relatedRules} label="관련 룰" />
+
+      {/* 댓글 */}
+      <section className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-800">
+        <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-gray-100">
+          댓글
+        </h2>
+        <GiscusComments />
+      </section>
     </div>
   )
 }
