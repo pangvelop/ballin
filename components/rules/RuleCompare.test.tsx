@@ -27,6 +27,16 @@ const nba: LeagueInfo = {
   keyPoints: ['게더 스텝 후 2보까지 허용', '유로 스텝 합법'],
 }
 
+const fibaWithCommon: LeagueInfo = {
+  description: 'FIBA 기준',
+  keyPoints: ['공통 포인트', 'FIBA 전용 포인트'],
+}
+
+const nbaWithCommon: LeagueInfo = {
+  description: 'NBA 기준',
+  keyPoints: ['공통 포인트', 'NBA 전용 포인트'],
+}
+
 describe('RuleCompare', () => {
   it('기본 탭 모드에서 FIBA/NBA 탭 버튼을 표시한다', () => {
     render(<RuleCompare fiba={fiba} nba={nba} />)
@@ -62,5 +72,47 @@ describe('RuleCompare', () => {
   it('핵심 포인트를 표시한다', () => {
     render(<RuleCompare fiba={fiba} nba={nba} />)
     expect(screen.getByText('피벗풋 이동 시 바이올레이션')).toBeInTheDocument()
+  })
+
+  describe('차이점 하이라이트', () => {
+    it('비교 모드에서 공통 포인트는 하이라이트가 없다', async () => {
+      const user = userEvent.setup()
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      await user.click(screen.getByRole('switch'))
+
+      const commonPoints = screen.getAllByText('공통 포인트')
+      for (const point of commonPoints) {
+        expect(point.closest('li')).not.toHaveClass('border-blue-400')
+        expect(point.closest('li')).not.toHaveClass('border-red-400')
+      }
+    })
+
+    it('비교 모드에서 FIBA 고유 포인트에 파란색 하이라이트를 표시한다', async () => {
+      const user = userEvent.setup()
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      await user.click(screen.getByRole('switch'))
+
+      const fibaOnly = screen.getByText('FIBA 전용 포인트')
+      expect(fibaOnly.closest('li')).toHaveClass('border-blue-400')
+    })
+
+    it('비교 모드에서 NBA 고유 포인트에 빨간색 하이라이트를 표시한다', async () => {
+      const user = userEvent.setup()
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      await user.click(screen.getByRole('switch'))
+
+      const nbaOnly = screen.getByText('NBA 전용 포인트')
+      expect(nbaOnly.closest('li')).toHaveClass('border-red-400')
+    })
+
+    it('탭 모드에서는 하이라이트가 없다', () => {
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      const fibaOnly = screen.getByText('FIBA 전용 포인트')
+      expect(fibaOnly.closest('li')).not.toHaveClass('border-blue-400')
+    })
   })
 })
