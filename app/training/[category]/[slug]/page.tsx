@@ -8,6 +8,7 @@ import InfoBox from '@/components/common/InfoBox'
 import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
 import RelatedContent from '@/components/common/RelatedContent'
+import QuizSection from '@/components/quiz/QuizSection'
 import { TRAINING_CATEGORIES } from '@/lib/categories'
 import { getAllTraining, getTrainingBySlug } from '@/lib/content'
 import type { TrainingCategory } from '@/lib/types'
@@ -148,6 +149,11 @@ export default async function TrainingDetailPage({ params }: Props) {
             </span>
           ))}
         </div>
+      )}
+
+      {/* 퀴즈 */}
+      {training.quiz && training.quiz.questions.length > 0 && (
+        <QuizSection quiz={training.quiz} slug={slug} />
       )}
 
       {/* 관련 연습법 */}

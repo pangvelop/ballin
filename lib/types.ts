@@ -42,6 +42,7 @@ export interface RuleFrontmatter {
   videos?: Video[]
   fiba: LeagueInfo
   nba: LeagueInfo
+  quiz?: Quiz
 }
 
 // 룰 데이터 (프론트매터 + 메타)
@@ -63,6 +64,7 @@ export interface TrainingFrontmatter {
   videos?: Video[]
   commonMistakes?: string[]
   relatedDrills?: string[]
+  quiz?: Quiz
 }
 
 // 연습법 데이터 (프론트매터 + 메타)
@@ -86,6 +88,38 @@ export interface RoutineFrontmatter {
 export interface RoutineData extends RoutineFrontmatter {
   slug: string
   content: string
+}
+
+// 퀴즈 타입
+interface MultipleChoiceQuestion {
+  id: string
+  type: 'multiple-choice'
+  question: string
+  options: [string, string, string, string]
+  answer: number
+  explanation: string
+}
+
+interface TrueFalseQuestion {
+  id: string
+  type: 'true-false'
+  question: string
+  answer: boolean
+  explanation: string
+}
+
+export type QuizQuestion = MultipleChoiceQuestion | TrueFalseQuestion
+
+export interface Quiz {
+  questions: QuizQuestion[]
+}
+
+export interface QuizProgress {
+  slug: string
+  score: number
+  total: number
+  completedAt: string
+  answers: number[]
 }
 
 // 용어사전 항목
