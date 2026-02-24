@@ -9,6 +9,7 @@ import RuleCompare from '@/components/rules/RuleCompare'
 import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
 import RelatedContent from '@/components/common/RelatedContent'
+import QuizSection from '@/components/quiz/QuizSection'
 import { RULE_CATEGORIES } from '@/lib/categories'
 import { getAllRules, getRuleBySlug } from '@/lib/content'
 import type { RuleCategory } from '@/lib/types'
@@ -138,6 +139,11 @@ export default async function RuleDetailPage({ params }: Props) {
             </span>
           ))}
         </div>
+      )}
+
+      {/* 퀴즈 */}
+      {rule.quiz && rule.quiz.questions.length > 0 && (
+        <QuizSection quiz={rule.quiz} slug={slug} />
       )}
 
       {/* 관련 룰 */}
