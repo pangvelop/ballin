@@ -63,4 +63,58 @@ describe('RuleCompare', () => {
     render(<RuleCompare fiba={fiba} nba={nba} />)
     expect(screen.getByText('피벗풋 이동 시 바이올레이션')).toBeInTheDocument()
   })
+
+  describe('차이점 하이라이트 (B1)', () => {
+    const fibaWithCommon: LeagueInfo = {
+      description: 'FIBA 규정',
+      keyPoints: ['공통 포인트', 'FIBA 고유 포인트'],
+    }
+
+    const nbaWithCommon: LeagueInfo = {
+      description: 'NBA 규정',
+      keyPoints: ['공통 포인트', 'NBA 고유 포인트'],
+    }
+
+    it('비교 모드에서 공통 포인트는 하이라이트 없이 표시한다', async () => {
+      const user = userEvent.setup()
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      await user.click(screen.getByRole('switch'))
+      const commonPoints = screen.getAllByText('공통 포인트')
+      // 공통 포인트는 파란/빨간 하이라이트 클래스가 없어야 함
+      for (const el of commonPoints) {
+        expect(el.closest('li')).not.toHaveClass('bg-blue-50')
+        expect(el.closest('li')).not.toHaveClass('bg-red-50')
+      }
+    })
+
+    it('비교 모드에서 FIBA 고유 포인트에 파란색 하이라이트를 표시한다', async () => {
+      const user = userEvent.setup()
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      await user.click(screen.getByRole('switch'))
+      const fibaOnly = screen.getByText('FIBA 고유 포인트')
+      expect(fibaOnly.closest('li')).toHaveClass('bg-blue-50')
+      expect(fibaOnly.closest('li')).toHaveClass('border-l-2')
+      expect(fibaOnly.closest('li')).toHaveClass('border-blue-400')
+    })
+
+    it('비교 모드에서 NBA 고유 포인트에 빨간색 하이라이트를 표시한다', async () => {
+      const user = userEvent.setup()
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+
+      await user.click(screen.getByRole('switch'))
+      const nbaOnly = screen.getByText('NBA 고유 포인트')
+      expect(nbaOnly.closest('li')).toHaveClass('bg-red-50')
+      expect(nbaOnly.closest('li')).toHaveClass('border-l-2')
+      expect(nbaOnly.closest('li')).toHaveClass('border-red-400')
+    })
+
+    it('탭 모드에서는 하이라이트가 없다', () => {
+      render(<RuleCompare fiba={fibaWithCommon} nba={nbaWithCommon} />)
+      // 탭 모드 (기본) — FIBA만 보이고 하이라이트 없음
+      const fibaOnly = screen.getByText('FIBA 고유 포인트')
+      expect(fibaOnly.closest('li')).not.toHaveClass('bg-blue-50')
+    })
+  })
 })

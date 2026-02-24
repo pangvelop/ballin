@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { getAllRules } from '@/lib/content'
+import { getAllRules, getAllTraining } from '@/lib/content'
 import DifficultyBadge from '@/components/common/DifficultyBadge'
 import BookmarkSection from '@/components/common/BookmarkSection'
+import HeroSearchTrigger from '@/components/common/HeroSearchTrigger'
 
 const QUICK_LINKS = [
   { href: '/rules', label: '룰북', description: '9개 카테고리별 농구 규칙' },
@@ -9,9 +10,21 @@ const QUICK_LINKS = [
   { href: '/glossary', label: '용어사전', description: '농구 용어 한눈에 보기' },
 ] as const
 
+const RECOMMENDED_DRILL_SLUGS = [
+  'crossover-dribble',
+  'layup-finish',
+  'free-throw-routine',
+  'defensive-slide',
+]
+
 export default function Home() {
   const allRules = getAllRules()
   const featuredRules = allRules.slice(0, 4)
+
+  const allTraining = getAllTraining()
+  const featuredDrills = allTraining.filter((t) =>
+    RECOMMENDED_DRILL_SLUGS.includes(t.slug)
+  )
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -23,9 +36,13 @@ export default function Home() {
         <p className="mb-2 text-xl text-gray-700 dark:text-gray-300">
           농구 룰 &amp; 연습법 가이드
         </p>
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="mb-6 text-gray-500 dark:text-gray-400">
           FIBA/NBA 룰과 연습법을 체계적으로 정리한 모바일 퍼스트 웹앱
         </p>
+        {/* B3: 히어로 검색바 */}
+        <div className="flex justify-center">
+          <HeroSearchTrigger />
+        </div>
       </section>
 
       {/* 빠른 바로가기 */}
@@ -51,9 +68,9 @@ export default function Home() {
       {/* 북마크 바로가기 */}
       <BookmarkSection />
 
-      {/* 추천 콘텐츠 */}
+      {/* 추천 룰 */}
       {featuredRules.length > 0 && (
-        <section>
+        <section className="mb-12">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
               추천 룰
@@ -80,6 +97,45 @@ export default function Home() {
                 </h3>
                 <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
                   {rule.summary}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* B2: 추천 연습법 */}
+      {featuredDrills.length > 0 && (
+        <section>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              추천 연습법
+            </h2>
+            <Link
+              href="/training"
+              className="text-sm font-medium text-brand-500 hover:text-brand-600"
+            >
+              전체 보기
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {featuredDrills.map((drill) => (
+              <Link
+                key={drill.slug}
+                href={`/training/${drill.category}/${drill.slug}`}
+                className="group rounded-xl border border-gray-200 p-4 transition-all hover:border-brand-300 hover:shadow-md dark:border-gray-800 dark:hover:border-brand-700"
+              >
+                <div className="mb-2 flex items-center gap-2">
+                  <DifficultyBadge difficulty={drill.difficulty} />
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {drill.duration}
+                  </span>
+                </div>
+                <h3 className="mb-1 font-semibold text-gray-900 group-hover:text-brand-500 dark:text-gray-100">
+                  {drill.title}
+                </h3>
+                <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                  {drill.summary}
                 </p>
               </Link>
             ))}

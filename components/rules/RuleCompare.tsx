@@ -11,7 +11,48 @@ interface RuleCompareProps {
 
 type League = 'fiba' | 'nba'
 
-function LeagueContent({ label, data }: { label: string; data: LeagueInfo }) {
+interface ComparedKeyPoint {
+  text: string
+  status: 'common' | 'fiba-only' | 'nba-only'
+}
+
+function compareKeyPoints(
+  fibaPoints: readonly string[],
+  nbaPoints: readonly string[]
+): { fibaCompared: ComparedKeyPoint[]; nbaCompared: ComparedKeyPoint[] } {
+  const nbaSet = new Set(nbaPoints)
+  const fibaSet = new Set(fibaPoints)
+
+  const fibaCompared = fibaPoints.map((text) => ({
+    text,
+    status: (nbaSet.has(text) ? 'common' : 'fiba-only') as ComparedKeyPoint['status'],
+  }))
+
+  const nbaCompared = nbaPoints.map((text) => ({
+    text,
+    status: (fibaSet.has(text) ? 'common' : 'nba-only') as ComparedKeyPoint['status'],
+  }))
+
+  return { fibaCompared, nbaCompared }
+}
+
+const HIGHLIGHT_CLASSES: Record<ComparedKeyPoint['status'], string> = {
+  common: '',
+  'fiba-only': 'bg-blue-50 dark:bg-blue-950 border-l-2 border-blue-400 pl-2',
+  'nba-only': 'bg-red-50 dark:bg-red-950 border-l-2 border-red-400 pl-2',
+}
+
+function LeagueContent({
+  label,
+  data,
+  comparedPoints,
+}: {
+  label: string
+  data: LeagueInfo
+  comparedPoints?: ComparedKeyPoint[]
+}) {
+  const points = comparedPoints ?? data.keyPoints.map((text) => ({ text, status: 'common' as const }))
+
   return (
     <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
       <h3 className="mb-3 text-sm font-bold text-brand-500">{label}</h3>
@@ -19,19 +60,19 @@ function LeagueContent({ label, data }: { label: string; data: LeagueInfo }) {
         {data.description}
       </p>
 
-      {data.keyPoints.length > 0 && (
+      {points.length > 0 && (
         <div>
           <h4 className="mb-2 text-sm font-semibold text-gray-900 dark:text-gray-100">
             핵심 포인트
           </h4>
           <ul className="space-y-1.5">
-            {data.keyPoints.map((point) => (
+            {points.map((point) => (
               <li
-                key={point}
-                className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"
+                key={point.text}
+                className={`flex items-start gap-2 rounded text-sm text-gray-600 dark:text-gray-400 ${HIGHLIGHT_CLASSES[point.status]}`}
               >
                 <span className="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-400" />
-                {point}
+                {point.text}
               </li>
             ))}
           </ul>
@@ -82,11 +123,16 @@ export default function RuleCompare({ fiba, nba }: RuleCompareProps) {
       </div>
 
       {isCompareMode ? (
-        /* 비교 모드: 나란히 표시 */
-        <div className="grid gap-4 md:grid-cols-2">
-          <LeagueContent label="FIBA" data={fiba} />
-          <LeagueContent label="NBA" data={nba} />
-        </div>
+        /* 비교 모드: 나란히 표시 + 차이점 하이라이트 */
+        (() => {
+          const { fibaCompared, nbaCompared } = compareKeyPoints(fiba.keyPoints, nba.keyPoints)
+          return (
+            <div className="grid gap-4 md:grid-cols-2">
+              <LeagueContent label="FIBA" data={fiba} comparedPoints={fibaCompared} />
+              <LeagueContent label="NBA" data={nba} comparedPoints={nbaCompared} />
+            </div>
+          )
+        })()
       ) : (
         /* 탭 모드: 하나씩 표시 */
         <>
