@@ -37,21 +37,16 @@ export default function QuizQuestion({
 
       <div className="space-y-2">
         {options.map((option, idx) => {
-          let buttonClass =
+          const baseClass =
             'w-full rounded-lg border px-4 py-3 text-left text-sm transition-colors'
 
-          if (answered) {
-            if (idx === correctIndex) {
-              buttonClass += ' border-green-400 bg-green-50 text-green-800 dark:bg-green-950 dark:text-green-200'
-            } else if (idx === selectedAnswer) {
-              buttonClass += ' border-red-400 bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200'
-            } else {
-              buttonClass += ' border-gray-200 text-gray-400 dark:border-gray-700 dark:text-gray-500'
-            }
-          } else {
-            buttonClass +=
-              ' border-gray-200 text-gray-700 hover:border-brand-300 hover:bg-brand-50 dark:border-gray-700 dark:text-gray-300 dark:hover:border-brand-700 dark:hover:bg-brand-950'
-          }
+          const stateClass = answered
+            ? idx === correctIndex
+              ? 'border-green-400 bg-green-50 text-green-800 dark:bg-green-950 dark:text-green-200'
+              : idx === selectedAnswer
+                ? 'border-red-400 bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200'
+                : 'border-gray-200 text-gray-400 dark:border-gray-700 dark:text-gray-500'
+            : 'border-gray-200 text-gray-700 hover:border-brand-300 hover:bg-brand-50 dark:border-gray-700 dark:text-gray-300 dark:hover:border-brand-700 dark:hover:bg-brand-950'
 
           return (
             <button
@@ -59,7 +54,7 @@ export default function QuizQuestion({
               type="button"
               onClick={() => !answered && onAnswer(idx)}
               disabled={answered}
-              className={buttonClass}
+              className={`${baseClass} ${stateClass}`}
             >
               {option}
             </button>
