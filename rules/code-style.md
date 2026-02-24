@@ -28,3 +28,14 @@
 - `any` 타입 사용 금지
 - 타입 단언 (`as any`, `@ts-ignore`) 사용 금지
 - `unknown` + narrowing 패턴 사용
+
+## 금지 사항
+
+- `any` 타입 사용
+- `console.log` 커밋 (개발 중 사용 후 반드시 제거)
+- `@ts-ignore`, `@ts-expect-error` 사용
+- MDX 프론트매터 필수 필드 누락
+- 난이도 값 오타 (`beginner`, `intermediate`, `advanced`만 허용)
+- 인라인 스타일 사용 (Tailwind 클래스만)
+- 이미지 `alt` 텍스트 누락
+- `generateStaticParams` 누락 (동적 라우트에서 반드시 구현)
