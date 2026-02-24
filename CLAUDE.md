@@ -53,4 +53,5 @@ npm run validate      # lint + typecheck + test + build (PR 전 필수)
 
 - `docs/plans/2026-02-07-basketball-guide-design.md` — 설계 문서
 - `docs/plans/2026-02-16-spec.md` — 기능 명세서
+- `docs/plans/2026-02-24-phase3-design.md` — Phase 3 고도화 설계 (F040~F043 + B1~B3)
 - `docs/prompt_plan.md` — 구현 계획 (진행률 추적)

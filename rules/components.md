@@ -25,6 +25,12 @@
 - 용도 2: **흔한 실수 & 교정법** (연습법 페이지)
 - 시각적으로 구분되는 강조 박스 스타일
 
+## HeroSearchTrigger
+
+- 홈 히어로 영역의 검색 트리거 버튼 (`'use client'`)
+- 검색 입력 필드처럼 보이지만 실제로는 버튼 (read-only)
+- 클릭 시 `Cmd+K` KeyboardEvent 디스패치 → 기존 SearchBar 모달 오픈
+
 ## Breadcrumb
 
 - 모든 하위 페이지에 표시
