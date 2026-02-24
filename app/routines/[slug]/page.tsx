@@ -7,6 +7,7 @@ import DifficultyBadge from '@/components/common/DifficultyBadge'
 import RoutineView from '@/components/training/RoutineView'
 import VideoEmbed from '@/components/common/VideoEmbed'
 import BookmarkButton from '@/components/common/BookmarkButton'
+import GiscusComments from '@/components/common/GiscusComments'
 import { getAllRoutines, getRoutineBySlug, getAllTraining } from '@/lib/content'
 
 interface Props {
@@ -106,6 +107,14 @@ export default async function RoutineDetailPage({ params }: Props) {
           ))}
         </div>
       )}
+
+      {/* 댓글 */}
+      <section className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-800">
+        <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-gray-100">
+          댓글
+        </h2>
+        <GiscusComments />
+      </section>
     </div>
   )
 }
