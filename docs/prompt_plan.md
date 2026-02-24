@@ -1,8 +1,8 @@
 # prompt_plan.md — Ballin 구현 계획
 
 > **작성일:** 2026-02-07
-> **마지막 동기화:** 2026-02-16
-> **진행률:** 68/68 완료 (100%)
+> **마지막 동기화:** 2026-02-24
+> **진행률:** 75/78 완료 (96%) — Phase 0~5 완료, Phase 6 Sprint 1~3 완료
 
 ---
 
@@ -241,11 +241,13 @@
 | Phase 3 | 14 | 14 ✅ | 연습법, 용어사전, 검색, 필터 |
 | Phase 4 | 9 | 9 ✅ | 비교 모드, 루틴, 북마크, 다크모드 |
 | Phase 5 | 12 | 12 ✅ | SEO, CI/CD, 콘텐츠 완성 |
-| **합계** | **68** | **68** | **100% 완료** |
+| Phase 6 | 10 | 7 | 고도화 (설계 갭 해소 + F043 + F040) |
+| **합계** | **78** | **75** | **96% 완료** |
 
 ### 남은 Task
 
-없음 — 모든 Task 완료!
+- F041: 커뮤니티 Giscus 댓글 (Task 6.9)
+- F042: PWA 오프라인 지원 (Task 6.10)
 
 ### 콘텐츠 현황
 
@@ -261,6 +263,61 @@
 
 | 테스트 타입 | 개수 |
 |------------|------|
-| 단위/컴포넌트 (Vitest) | 127개 |
+| 단위/컴포넌트 (Vitest) | 152개 |
 | E2E (Playwright) | 28개 |
-| **합계** | **155개** |
+| **합계** | **180개** |
+
+---
+
+## Phase 6: 고도화 (Phase 3 설계 문서 기반)
+
+> 설계 문서: `docs/plans/2026-02-24-phase3-design.md`
+
+### Milestone 6.1: 설계 갭 해소 (Sprint 1) ✅
+
+- [x] **Task 6.1 (B1)** — RuleCompare 차이점 하이라이트
+  - 비교 모드에서 FIBA/NBA 고유 포인트 색상 강조 (FIBA=파란색, NBA=빨간색)
+  - `compareKeyPoints()` 함수 + `ComparedKeyPoint` 타입 추가
+  - 테스트 4개 추가
+- [x] **Task 6.2 (B2)** — 홈 페이지 추천 드릴 섹션
+  - 추천 연습법 4개 그리드 (DifficultyBadge + duration)
+  - `recommendedDrillSlugs` 명시적 지정
+- [x] **Task 6.3 (B3)** — 홈 페이지 히어로 검색바
+  - `HeroSearchTrigger.tsx` 신규 컴포넌트
+  - 클릭 시 Cmd+K 이벤트 디스패치 → 기존 SearchBar 모달 오픈
+  - 테스트 2개 추가
+- [x] **Task 6.4** — Sprint 1 E2E 보강 (선택)
+
+### Milestone 6.2: F043 자체 영상 연동 (Sprint 2) ✅
+
+- [x] **Task 6.5 (F043)** — VideoEmbed MP4/WebM 지원
+  - `Video` 인터페이스에 `type?`, `poster?` 필드 추가
+  - `isNativeVideoUrl()`, `getVideoMimeType()` 헬퍼 함수
+  - HTML5 `<video>` 태그 렌더링 분기
+  - 상위 페이지 3개에서 `poster` prop 전달 연동
+  - 테스트 4개 추가
+
+### Milestone 6.3: F040 퀴즈 / 셀프 테스트 (Sprint 3) ✅
+
+- [x] **Task 6.6 (F040)** — 퀴즈 타입 + 진행률 유틸
+  - `QuizQuestion` discriminated union, `Quiz`, `QuizProgress` 타입
+  - `lib/quiz-progress.ts` localStorage CRUD
+  - 테스트 4개 추가
+- [x] **Task 6.7 (F040)** — 퀴즈 컴포넌트 3개
+  - `QuizSection`, `QuizQuestion`, `QuizResult`
+  - 테스트 11개 추가
+- [x] **Task 6.8 (F040)** — 페이지 연동 + 샘플 콘텐츠
+  - 룰/연습법 상세 페이지 하단에 QuizSection 배치
+  - `traveling.mdx`에 샘플 퀴즈 데이터 (MC 2개 + T/F 2개)
+
+### Milestone 6.4: F041 커뮤니티 (Sprint 4)
+
+- [ ] **Task 6.9 (F041)** — Giscus 댓글 컴포넌트
+  - `@giscus/react` 설치, 다크모드 연동
+  - 룰/연습법/루틴 상세 페이지 하단 배치
+
+### Milestone 6.5: F042 PWA (Sprint 5)
+
+- [ ] **Task 6.10 (F042)** — PWA 오프라인 지원
+  - PoC 필수 (`@serwist/next` + Next.js 15 호환성)
+  - manifest.json, Service Worker, 오프라인 폴백

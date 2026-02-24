@@ -37,10 +37,10 @@
 | B1 | 비교 모드 차이점 하이라이트 | P3 | ✅ |
 | B2 | 홈 추천 연습법 섹션 | P3 | ✅ |
 | B3 | 히어로 검색바 | P3 | ✅ |
-| F040 | 퀴즈 / 셀프 테스트 | P3 | 부분 구현 (타입/컴포넌트/라우트 연결 완료, 샘플 데이터 traveling.mdx만) |
+| F040 | 퀴즈 / 셀프 테스트 | P3 | ✅ |
 | F041 | 커뮤니티 (댓글/피드백) | P3 | 미구현 |
 | F042 | PWA 지원 (오프라인 열람) | P3 | 미구현 |
-| F043 | 자체 영상 연동 | P3 | ✅ |
+| F043 | 자체 영상 연동 (MP4/WebM) | P3 | ✅ |
 
 ## URL 쿼리 파라미터 설계
 
@@ -114,7 +114,8 @@ interface BookmarkItem {
 - 차이점 하이라이트 로직:
   - keyPoints 문자열 완전 일치 기준으로 비교
   - 양쪽 모두 있는 항목 → 일반 표시
-  - 한쪽만 있는 항목 → 노란 배경 + "FIBA만" 또는 "NBA만" 라벨
+  - FIBA 고유 항목 → 파란색 하이라이트 (`bg-blue-50 dark:bg-blue-950 border-l-2 border-blue-400`)
+  - NBA 고유 항목 → 빨간색 하이라이트 (`bg-red-50 dark:bg-red-950 border-l-2 border-red-400`)
 - 모바일 (768px 이하): 위/아래 스택 (FIBA 위, NBA 아래)
 - URL: ?league=compare
 ```
@@ -130,6 +131,18 @@ interface BookmarkItem {
   --bg-primary:   light=#FFFFFF,  dark=#1A1A2E
   --text-primary: light=#1A1A2E,  dark=#EAEAEA
   --accent:       light=#F97316,  dark=#FB923C
+```
+
+## 퀴즈 / 셀프 테스트 상세 (F040)
+
+```
+- 질문 타입: multiple-choice (4지선다) | true-false (O/X)
+- 타입 안전: QuizQuestion discriminated union (type 필드 기반)
+- 로컬스토리지 key: "ballin-quiz-{slug}"
+- 저장 데이터: { slug, score, total, completedAt (ISO 8601), answers[] }
+- 이전 진행률 자동 로드 (useEffect on mount)
+- 배치 위치: 룰/연습법 상세 페이지 하단 (quiz frontmatter 있을 때만 렌더링)
+- MDX 프론트매터에 quiz.questions[] 배열로 정의
 ```
 
 ## 용어사전 초성 추출 (F023)
