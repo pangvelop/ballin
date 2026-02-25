@@ -23,6 +23,6 @@ npm run dev
 
 - `CLAUDE.md` — Claude Code 전체 컨텍스트
 - `AGENTS.md` — AI 에이전트 빠른 참조
-- `docs/prompt_plan.md` — Task 기반 구현 계획 (68개)
+- `docs/prompt_plan.md` — Task 기반 구현 계획 (78개)
 - `docs/START_GUIDE.md` — Phase별 프롬프트 템플릿
 - `docs/plans/` — 설계 문서
