@@ -1,10 +1,14 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ThemeProvider from '@/components/common/ThemeProvider'
 import { getAllRules, getAllTraining, getAllGlossaryTerms } from '@/lib/content'
 import { buildSearchIndex } from '@/lib/search'
 import './globals.css'
+
+export const viewport: Viewport = {
+  themeColor: '#f97316',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ballin-three.vercel.app'),
@@ -14,6 +18,7 @@ export const metadata: Metadata = {
   },
   description:
     '농구 룰(FIBA/NBA)과 연습법을 체계적으로 정리한 모바일 퍼스트 웹앱. 코트에서 바로 참고하세요.',
+  manifest: '/manifest.json',
   openGraph: {
     siteName: 'Ballin',
     locale: 'ko_KR',

@@ -2,7 +2,7 @@
 
 > **작성일:** 2026-02-07
 > **마지막 동기화:** 2026-02-25
-> **진행률:** 76/78 완료 (97%) — Phase 0~5 완료, Phase 6 Sprint 1~4 완료
+> **진행률:** 78/78 완료 (100%) — Phase 0~6 전체 완료
 
 ---
 
@@ -241,12 +241,12 @@
 | Phase 3 | 14 | 14 ✅ | 연습법, 용어사전, 검색, 필터 |
 | Phase 4 | 9 | 9 ✅ | 비교 모드, 루틴, 북마크, 다크모드 |
 | Phase 5 | 12 | 12 ✅ | SEO, CI/CD, 콘텐츠 완성 |
-| Phase 6 | 10 | 8 | 고도화 (설계 갭 해소 + F043 + F040 + F041) |
-| **합계** | **78** | **76** | **97% 완료** |
+| Phase 6 | 10 | 10 ✅ | 고도화 (설계 갭 해소 + F043 + F040 + F041 + F042) |
+| **합계** | **78** | **78** | **100% 완료** |
 
 ### 남은 Task
 
-- F042: PWA 오프라인 지원 (Task 6.10)
+없음 — 전체 완료!
 
 ### 콘텐츠 현황
 
@@ -262,9 +262,9 @@
 
 | 테스트 타입 | 개수 |
 |------------|------|
-| 단위/컴포넌트 (Vitest) | 156개 |
+| 단위/컴포넌트 (Vitest) | 165개 |
 | E2E (Playwright) | 28개 |
-| **합계** | **184개** |
+| **합계** | **193개** |
 
 ---
 
@@ -319,8 +319,16 @@
   - GitHub Discussions 활성화 + General 카테고리 매핑
   - 테스트 3개 추가
 
-### Milestone 6.5: F042 PWA (Sprint 5)
+### Milestone 6.5: F042 PWA (Sprint 5) ✅
 
-- [ ] **Task 6.10 (F042)** — PWA 오프라인 지원
-  - PoC 필수 (`@serwist/next` + Next.js 15 호환성)
-  - manifest.json, Service Worker, 오프라인 폴백
+- [x] **Task 6.10 (F042)** — PWA 오프라인 지원
+  - `@serwist/next@9.5.4` + `serwist@9.5.4` 설치 (Next.js 15 호환 확인)
+  - `next.config.ts`에 `withSerwist()` 래핑 (disable dev, exclude 패턴)
+  - `tsconfig.json`에 `webworker` lib + `@serwist/next/typings` 추가
+  - `app/sw.ts` Service Worker 진입점 (precache + defaultCache + 오프라인 폴백)
+  - `public/manifest.json` PWA 매니페스트 (standalone, theme_color: #f97316)
+  - `public/icons/` 아이콘 3종 (192, 512, 512-maskable)
+  - `app/~offline/page.tsx` 오프라인 폴백 페이지
+  - `app/layout.tsx`에 manifest + theme-color 메타 추가
+  - `vercel.json` CSP에 `worker-src 'self'` 추가
+  - 테스트 9개 추가 (오프라인 페이지 3 + 매니페스트 검증 6)

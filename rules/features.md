@@ -39,7 +39,7 @@
 | B3 | 히어로 검색바 | P3 | ✅ |
 | F040 | 퀴즈 / 셀프 테스트 | P3 | ✅ |
 | F041 | 커뮤니티 (댓글/피드백) | P3 | ✅ |
-| F042 | PWA 지원 (오프라인 열람) | P3 | 미구현 |
+| F042 | PWA 지원 (오프라인 열람) | P3 | ✅ |
 | F043 | 자체 영상 연동 (MP4/WebM) | P3 | ✅ |
 
 ## URL 쿼리 파라미터 설계
@@ -155,6 +155,23 @@ interface BookmarkItem {
 - CSP: vercel.json frame-src에 https://giscus.app 필수
 - Hydration: mounted 가드로 SSR 시 skeleton → 클라이언트 mount 후 Giscus 렌더링
 - 카테고리: General (GitHub Discussions 기본 제공)
+```
+
+## PWA 오프라인 지원 상세 (F042)
+
+```
+- @serwist/next v9.5.4 + serwist v9.5.4 (Next.js 15 호환)
+- Service Worker: app/sw.ts → 빌드 시 public/sw.js 생성
+- 개발 환경: disable: true (Turbopack 충돌 방지)
+- 캐싱 전략:
+  - 빌드 정적 자산 (JS/CSS): Precache (자동 주입)
+  - HTML 페이지: NetworkFirst
+  - 이미지/폰트: StaleWhileRevalidate
+  - 네트워크 실패: /~offline 폴백 페이지
+- 매니페스트: public/manifest.json (standalone, theme_color: #f97316)
+- 아이콘: public/icons/ (192, 512, 512-maskable PNG)
+- CSP: vercel.json worker-src 'self' 추가
+- .gitignore: public/sw.js, public/sw.js.map 제외
 ```
 
 ## 용어사전 초성 추출 (F023)
