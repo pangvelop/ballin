@@ -9,17 +9,17 @@
 
 ## 1. 현황 요약
 
-Phase 0~2(F001~F036) **36개 기능 100% 완료**.
+Phase 0~2(F001~F036) 36개 기능 완료 + Phase 3(F040~F041) 진행 중.
 
 | 항목 | 수치 |
 |------|------|
 | 콘텐츠 | 163개 (룰 36 + 연습법 20 + 루틴 8 + 용어 99) |
-| 테스트 | 155개 (Vitest 127 + E2E 28) |
-| 구현 완료 | 68/68 태스크 (100%) |
+| 테스트 | 184개 (Vitest 156 + E2E 28) |
+| 구현 완료 | 76/78 태스크 (97%) |
 
 ### 남은 작업
 
-Phase 3 고도화 기능 4개(F040~F043) + 설계 대비 갭 3개(B1~B3) = **총 7개 기능**.
+Phase 3 고도화 기능 중 F042~F043 = **2개 기능 남음**.
 
 ---
 
@@ -324,18 +324,35 @@ function getAllQuizProgress(): QuizProgress[]
 
 ```tsx
 'use client'
+import { useState, useEffect } from 'react'
 import Giscus from '@giscus/react'
 import { useTheme } from 'next-themes'
 
 export default function GiscusComments() {
   const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <div className="h-48 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
+    )
+  }
+
   return (
     <Giscus
       repo="pangvelop/ballin"
-      repoId="..."          // 사전 작업에서 확인
-      category="Comments"
-      categoryId="..."      // 사전 작업에서 확인
+      repoId="R_kgDORKmzpA"
+      category="General"
+      categoryId="DIC_kwDORKmzpM4C3HLy"
       mapping="pathname"
+      strict="0"
+      reactionsEnabled="1"
+      emitMetadata="0"
+      inputPosition="top"
       theme={resolvedTheme === 'dark' ? 'dark' : 'light'}
       lang="ko"
     />
@@ -346,6 +363,8 @@ export default function GiscusComments() {
 - `mapping="pathname"` → URL 경로별 자동 Discussion 생성
 - 다크모드 전환 시 Giscus 테마도 자동 전환
 - `repoId`와 `categoryId`는 환경변수가 아닌 하드코딩 (공개 정보)
+- `mounted` 가드: SSR/CSR hydration mismatch 방지 (useTheme은 클라이언트에서만 유효)
+- **CSP 설정**: `vercel.json`에 `frame-src https://giscus.app` 추가 (iframe 차단 방지)
 
 **테스트 케이스** (3개):
 1. Giscus 컴포넌트가 렌더링되는지 확인 (`@giscus/react` 모킹)
