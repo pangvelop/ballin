@@ -22,8 +22,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx serve out -l 3001 -s',
+    command: 'npx next start -p 3001',
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
+    timeout: 120000,
   },
 })
