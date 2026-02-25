@@ -41,6 +41,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# serwist (빌드 산출물)
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
+
 # IDE
 .vscode/
 .idea/
